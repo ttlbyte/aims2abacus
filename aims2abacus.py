@@ -24,6 +24,20 @@ with open('geometry.in','r') as fin:
         if line.split()[0]=='lattice_vector':
             vectorlist.append([line.split()[1],line.split()[2],line.split()[3]])
             i+=1;              #store the vector information
+        if line.split()[0]=='constrain_relaxation':
+            constrain=line.split()[1];
+            if constrain=='.true.':
+                atom_coor[-1][3]=0;
+                atom_coor[-1][4]=0;
+                atom_coor[-1][5]=0;
+            if constrain=='x':
+                atom_coor[-1][3]=0;
+            if constrain=='y':
+                atom_coor[-1][4]=0;
+            if constrain=='z':
+                atom_coor[-1][5]=0;
+            else:
+                pass;
         if line.split()[0]=='atom_frac':
             atomname=line.split()[4];
             if atomname not in atomtype:
@@ -32,7 +46,7 @@ with open('geometry.in','r') as fin:
                     atom_coor=[];
                 atomtype.append(atomname);
                 j+=1;
-            atom_coor.append([line.split()[1],line.split()[2],line.split()[3]]);
+            atom_coor.append([line.split()[1],line.split()[2],line.split()[3],1,1,1]);
             l+=1;
         if line.split()[0]=='atom':
             k=1;
